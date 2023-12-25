@@ -1,0 +1,16 @@
+//confetti gore
+user bool confettigore = true;
+user int confettigore_amount = 1;
+user int confettigore_cleanup = 1;
+
+//weather mod
+//turns weather on if true and off if false
+server bool CWE_weather = true;
+//how often snow/rain/etc effect spawns, greater numbers means less often 
+server int CWE_intensity = 10;
+//type of a weather; it use bitflags, so only power of two would work as intended, other can cause bugs
+server int CWE_weather_type = 1;
+//play rain sound or no
+server bool CWE_rain_sound = false;
+//debug cvar, set to true to instantly play thunder sound
+server noarchive bool  cwe_thunder_debug = false;

@@ -1,0 +1,5 @@
+version "3.5"
+
+#include "zscript/blood_actors.txt"
+#include "zscript/gore_handler.txt"
+#include "zscript/we4ther_eff3cts/includer.zc"

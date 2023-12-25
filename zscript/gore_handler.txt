@@ -1,0 +1,122 @@
+
+Class ConfettiGoreHandler : EventHandler
+{
+	
+	override void CheckReplacement(ReplaceEvent e)
+	{
+		if (_isTitlemap) return;
+		
+		if(confettiGoreEnabled)
+		{
+			Name Confetti_Spawner;
+			if(confettiGoreAmount < 1)
+				Confetti_Spawner = "Confetti_Blood_Less";
+			else if(confettiGoreAmount > 1)
+				Confetti_Spawner = "Confetti_Blood_More";
+			else
+				Confetti_Spawner = "Confetti_Blood";
+			
+			if(e.Replacee is "Blood") 	e.Replacement = Confetti_Spawner;
+			if(e.Replacee is "BloodSPlatter") 	e.Replacement = Confetti_Spawner;
+		}
+	}
+	
+	override void WorldThingDied(WorldEvent e)
+	{
+		if (_isTitlemap) return;
+		
+		console.printf(""..e.thing.GetClassName());
+		
+		if(e.Thing && e.Thing.bIsMonster)
+		{
+			vector3 spawnPos = (e.thing.pos.xy, e.thing.pos.z + e.thing.height * 2/3);
+		
+			if(e.Thing.InStateSequence(e.Thing.CurState, e.Thing.ResolveState("XDeath")))
+			{
+				Actor.Spawn("Confetti_Blood_More", spawnPos);
+				Actor.Spawn("Confetti_Blood_More", spawnPos);
+				Actor.Spawn("Confetti_Blood", spawnPos);
+				Actor.Spawn("Confetti_Blood", spawnPos);
+			}
+			else
+			{
+				Actor.Spawn("Confetti_Blood", spawnPos);
+				Actor.Spawn("Confetti_Blood_Less", spawnPos);
+				Actor.Spawn("Confetti_Blood_Less", spawnPos);
+			}
+		}
+	}
+	
+	override void WorldTick()
+	{
+		if (_isTitlemap) return;
+		
+		playerinfo player = Players[ConsolePlayer];
+		if(!player) return;
+		
+		int confettiCleanup;
+	
+		//Only update settings every five seconds
+		if(level.time && level.time % 35 * 5 == 0)
+		{
+			confettiGoreEnabled = CVar.GetCVar("confettigore", player).GetBool();
+			confettiGoreAmount = CVar.GetCVar("confettigore_amount", player).GetInt();
+			confettiCleanup = CVar.GetCVar("confettigore_cleanup", player).GetInt();
+			player.mo.SetInventory("goreCleanUp", confettiCleanup);
+		}
+		
+		if(confettiCleanup == 2 && level.time && level.time % 1050 == 0)
+		{
+			cleanUpAllConfetti();
+		}
+		
+		if(confettiCleanup == 3 && level.time && level.time % 2100 == 0)
+		{
+			cleanUpAllConfetti();
+		}
+		
+		if(confettiCleanup == 4 && level.time && level.time % 6300 == 0)
+		{
+			cleanUpAllConfetti();
+		}
+		
+		if(confettiCleanup == 5 && level.time && level.time % 10500 == 0)
+		{
+			cleanUpAllConfetti();
+		}
+	}
+
+	override void WorldLoaded(WorldEvent event)
+	{
+		_isTitlemap = CheckTitlemap();
+	}
+	
+	private void cleanUpAllConfetti()
+	{
+		ThinkerIterator cF = ThinkerIterator.Create("Flying_Confetti", Thinker.STAT_DEFAULT);
+        Actor mo;
+
+        while (mo = Actor(cF.Next()))
+        {
+            mo.destroy();
+		}
+	}
+
+	private static bool CheckTitlemap()
+	{
+		bool isTitlemap = (level.mapname == "TITLEMAP");
+		return isTitlemap;
+	}
+	
+	private bool confettiGoreEnabled;
+	private int confettiGoreAmount;
+	private bool _isTitlemap;
+}
+
+Class goreCleanUp : Inventory
+{
+	Default
+	{
+	Inventory.MaxAmount 2;
+	}
+}

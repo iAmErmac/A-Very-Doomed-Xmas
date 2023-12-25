@@ -1,0 +1,137 @@
+
+LISTMENU "MainMenu"
+{
+	Font "BigFont", "White"
+	IfGame(Doom, Chex)
+	{
+		StaticPatch 94, 2, "M_DOOM"
+		Position 97, 72
+		IfOption(ReadThis)
+		{
+			Position 97, 64
+		}
+	}
+	IfGame(Strife)
+	{
+		StaticPatch 84, 2, "M_STRIFE"
+		Position 97, 45
+	}
+	IfGame(Heretic)
+	{
+		StaticPatch 88, 0, "M_HTIC"
+		StaticPatch 40, 10, "M_SKL01"
+		StaticPatch 232, 10, "M_SKL00"
+		Position 110, 56
+	}
+	IfGame(Hexen)
+	{
+		StaticPatch 88, 0, "M_HTIC"
+		StaticPatch 37, 80, "FBULB0"
+		StaticPatch 278, 80, "FBULA0"
+		Position 110, 56
+	}
+
+	/*IfGame(Doom, Strife, Chex)
+	{
+		PatchItem "M_NGAME", "n", "PlayerclassMenu"
+		ifOption(SwapMenu)
+		{
+			PatchItem "M_LOADG", "l", "LoadGameMenu"
+			PatchItem "M_SAVEG", "s", "SaveGameMenu"
+			PatchItem "M_OPTION","o", "OptionsMenu"
+		}
+		else
+		{
+			PatchItem "M_OPTION","o", "OptionsMenu"
+			PatchItem "M_LOADG", "l", "LoadGameMenu"
+			PatchItem "M_SAVEG", "s", "SaveGameMenu"
+		}
+		ifOption(ReadThis)
+		{
+			PatchItem "M_RDTHIS","r", "ReadThisMenu"
+		}
+		PatchItem "M_QUITG", "q", "QuitMenu"
+	}
+
+	IfGame(Heretic, Hexen)
+	{*/
+		TextItem "$MNU_NEWGAME", "n", "PlayerclassMenu"
+		TextItem "$MNU_OPTIONS", "o", "OptionsMenu"
+		TextItem "$MNU_DXOPTIONS", "x", "DOOMED_XMAS_Options"
+		TextItem "$MNU_LOADGAME", "l", "LoadGameMenu"
+		TextItem "$MNU_SAVEGAME", "s", "SaveGameMenu"
+		TextItem "$MNU_QUITGAME", "q", "QuitMenu"
+	//}
+}
+
+ListMenu "SkillMenu"
+{
+	Font "BigFont", "White"
+	IfGame(Doom, Chex)
+	{
+		StaticPatch 96, 14, "M_NEWG"
+	}
+	IfGame(Strife)
+	{
+		StaticPatch 96, 14, "M_NGAME"
+	}
+	IfGame(Doom, Strife, Chex)
+	{
+		StaticPatch 54, 38, "M_SKILL"
+		Position 48, 63
+	}
+	IfGame (Heretic)
+	{
+		Position 38, 30
+	}
+	IfGame (Hexen)
+	{
+		StaticText 74, 16, "$MNU_CHOOSESKILL"
+		Position 160, 44
+		centermenu
+	}
+}
+
+
+AddOptionMenu "OptionsMenu"
+{
+	Submenu "$DOOMED_XMAS_OPTIONS", "DOOMED_XMAS_Options"
+}
+
+OptionValue "CONFGORE_AMOUNT_OPTIONS" {
+	0, "$CONFGORE_AMOUNT_LESS"
+	1, "$CONFGORE_AMOUNT_DEFAULT"
+	2, "$CONFGORE_AMOUNT_MORE"
+}
+
+OptionValue "CONFGORE_CLEANUP_OPTIONS" {
+	0, "$CONFGORE_FADE"
+	1, "$CONFGORE_CLEAN"
+	2, "$CONFGORE_CLEAN30SEC"
+	3, "$CONFGORE_CLEAN1MIN"
+	4, "$CONFGORE_CLEAN3MIN"
+	5, "$CONFGORE_CLEAN5MIN"
+	6, "$CONFGORE_STAY"
+}
+
+OptionValue "SNOWFALL_INTENSITY_OPTIONS" {
+	10, "$WEATHER_SNOWFALL_LIGHT"
+	7, "$WEATHER_SNOWFALL_MEDIUM"
+	4, "$WEATHER_SNOWFALL_HEAVY"
+	1, "$WEATHER_SNOWFALL_EXTREME"
+}
+
+OptionMenu "DOOMED_XMAS_Options" {
+	Title "$DOOMED_XMAS_OPTIONS"
+	StaticText " "
+
+	StaticText "$CONFGORE_OPTIONS", "Gold"
+	Option "$CONFGORE", 			"confettigore", 			"OnOff"
+	Option "$CONFGORE_AMOUNT", 		"confettigore_amount", 		"CONFGORE_AMOUNT_OPTIONS", "confettigore"
+	Option "$CONFGORE_CLEANUP", 	"confettigore_cleanup", 	"CONFGORE_CLEANUP_OPTIONS", "confettigore"
+	StaticText " "
+
+	StaticText "$WEATHER_OPTIONS", "Gold"
+	Option "$WEATHER_SNOW", 		"CWE_weather_type", 		"YesNo"
+	Option "$WEATHER_SNOWFALL", 	"CWE_intensity", 			"SNOWFALL_INTENSITY_OPTIONS", "confettigore"
+}

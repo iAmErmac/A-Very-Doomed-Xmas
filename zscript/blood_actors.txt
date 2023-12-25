@@ -1,0 +1,1140 @@
+
+Class Confetti_Blood : Actor
+{
+	Default
+	{
+	Scale 0.8;
+	Mass 1;
+	Speed 10;
+	Gravity 0.4;
+	Scale 0.5;
+	+FORCEXYBILLBOARD
+	+THRUACTORS
+	+CLIENTSIDEONLY
+	+NOGRAVITY
+	}
+
+	states
+	{
+	Spawn:
+		TNT1 A 0;
+		TNT1 A 0 A_SpawnItemEx("ConfettiSpawner", 0, 0, random(15, 20));
+		TNT1 AAAAA 0 A_SpawnItemEx("ConfettiStringSpawner", 0, 0, random(10, 20), 0, 0, 0, 0, 0, 192);
+		TNT1 AAAAAAAAAA 0 A_SpawnItemEx("SmallConfettiSpawner", 0, 0, random(10, 20), 0, 0, 0, 0, 0, 64);
+		TNT1 AA 0 A_SpawnItemEx("ConfettiSpawner", 0, 0, random(15, 20), 0, 0, 0, 0, 0, 192);
+		TNT1 AAA 0 A_SpawnItemEx("ConfettiSpawnerSlow", 0, 0, random(15, 20), 0, 0, 0, 0, 0, 192);
+		TNT1 AA 0 A_SpawnItemEx("ConfettiSpawnerFast", 0, 0, random(15, 20), 0, 0, 0, 0, 0, 192);
+		TNT1 A 0 A_Jump(128, "Spawn1", "Spawn2", "Spawn3", "Spawn3", "Spawn4", "Spawn5");
+		CFTT R 10;
+		Stop;
+	Spawn2:
+		CFTT G 10;
+		Stop;
+	Spawn2:
+		CFTT B 10;
+		Stop;
+	Spawn2:
+		CFTT P 10;
+		Stop;
+	Spawn2:
+		CFTT I 10;
+		Stop;
+	Spawn2:
+		CFTT Y 10;
+		Stop;
+	}
+}
+
+Class Confetti_Blood_Less : Confetti_Blood
+{
+	states
+	{
+	Spawn:
+		TNT1 A 0;
+		TNT1 A 0 A_SpawnItemEx("ConfettiSpawner", 0, 0, random(15, 20));
+		TNT1 A 0 A_SpawnItemEx("ConfettiStringSpawner", 0, 0, random(10, 20), 0, 0, 0, 0, 0, 220);
+		TNT1 AAAA 0 A_SpawnItemEx("SmallConfettiSpawner", 0, 0, random(10, 20), 0, 0, 0, 0, 0, 120);
+		TNT1 A 0 A_SpawnItemEx("ConfettiSpawnerSlow", 0, 0, random(15, 20), 0, 0, 0, 0, 0, 245);
+		TNT1 A 0 A_SpawnItemEx("ConfettiSpawnerFast", 0, 0, random(15, 20), 0, 0, 0, 0, 0, 245);
+		TNT1 A 0 A_Jump(128, "Spawn1", "Spawn2", "Spawn3", "Spawn3", "Spawn4", "Spawn5");
+		CFTT R 10;
+		Stop;
+	Spawn2:
+		CFTT G 10;
+		Stop;
+	Spawn2:
+		CFTT B 10;
+		Stop;
+	Spawn2:
+		CFTT P 10;
+		Stop;
+	Spawn2:
+		CFTT I 10;
+		Stop;
+	Spawn2:
+		CFTT Y 10;
+		Stop;
+	}
+}
+
+Class Confetti_Blood_More : Confetti_Blood
+{
+	states
+	{
+	Spawn:
+		TNT1 A 0;
+		TNT1 A 0 A_SpawnItemEx("ConfettiSpawner", 0, 0, random(15, 20));
+		TNT1 AAAAA 0 A_SpawnItemEx("ConfettiStringSpawner", 0, 0, random(10, 20), 0, 0, 0, 0, 0, 128);
+		TNT1 AAAAAAAAAA 0 A_SpawnItemEx("SmallConfettiSpawner", 0, 0, random(10, 20), 0, 0, 0, 0, 0, 32);
+		TNT1 AAAAA 0 A_SpawnItemEx("ConfettiSpawner", 0, 0, random(15, 20), 0, 0, 0, 0, 0, 120);
+		TNT1 AAAAAAAA 0 A_SpawnItemEx("ConfettiSpawnerSlow", 0, 0, random(15, 20), 0, 0, 0, 0, 0, 90);
+		TNT1 AAAAAA 0 A_SpawnItemEx("ConfettiSpawnerFast", 0, 0, random(15, 20), 0, 0, 0, 0, 0, 100);
+		TNT1 A 0 A_Jump(128, "Spawn1", "Spawn2", "Spawn3", "Spawn3", "Spawn4", "Spawn5");
+		CFTT R 10;
+		Stop;
+	Spawn2:
+		CFTT G 10;
+		Stop;
+	Spawn2:
+		CFTT B 10;
+		Stop;
+	Spawn2:
+		CFTT P 10;
+		Stop;
+	Spawn2:
+		CFTT I 10;
+		Stop;
+	Spawn2:
+		CFTT Y 10;
+		Stop;
+	}
+}
+
+Class Flying_Confetti : Actor
+{
+	Default
+	{
+	scale 0.4;
+	speed 4;
+	radius 8;
+	height 1;
+	Mass 1;
+	Gravity 0.4;
+	+MISSILE   
+	+CLIENTSIDEONLY
+	+NOTELEPORT   
+	+NOBLOCKMAP
+	+THRUACTORS   
+	+FORCEXYBILLBOARD
+	+MOVEWITHSECTOR   
+	+DONTSPLASH
+	+ROLLSPRITE
+	}
+	
+	override void PostBeginPlay()
+	{
+		playerinfo player = Players[ConsolePlayer];
+		if(!player) return;
+		
+		goreCleanUp = player.mo.CountInv("goreCleanUp");
+	}
+	
+    States
+    {
+    Spawn:
+		TNT1 A 2;
+		Stop;
+    Death:
+		#### # 0 A_JumpIf(invoker.goreCleanUp == 1, "Cleanup");
+		#### # 0 A_JumpIf(invoker.goreCleanUp > 1, "Stay");
+		#### # 35 A_NoBlocking;
+		#### ########## 35 A_Jump(30, "Fadeout");
+		#### ########## 35 A_Jump(60, "Fadeout");
+		#### ########## 35 A_Jump(120, "Fadeout");
+	Fadeout:
+		#### # 3 A_Fadeout(0.05);
+		Wait;
+	Cleanup:
+		#### # 1;
+		Stop;
+	Stay:
+		#### # 1;
+		wait;
+    }
+	
+	protected int goreCleanUp;
+}
+
+Class RedConfetti : Flying_Confetti
+{
+	States
+	{
+    Spawn:
+		TNT1 A 0;
+		TNT1 A 0 A_Jump(255, "Spawn1", "Spawn2", "Spawn3", "Fly");
+	Spawn1:
+		TNT1 A 0 A_SetScale(-0.3, 0.3);
+		TNT1 A 0 A_Jump(128, 2);
+		TNT1 A 0 A_SetRoll(random(45,90));
+		TNT1 A 0;
+		Goto Fly;
+	Spawn2:
+		TNT1 A 0 A_SetScale(-0.25, -0.25);
+		TNT1 A 0 A_Jump(128, 2);
+		TNT1 A 0 A_SetRoll(random(90,180));
+		TNT1 A 0;
+		Goto Fly;
+	Spawn3:
+		TNT1 A 0 A_SetScale(-0.35, 0.35);
+		TNT1 A 0 A_Jump(128, 2);
+		TNT1 A 0 A_SetRoll(random(180,270));
+		TNT1 A 0;
+		Goto Fly;
+	Fly:
+		CFTT R 10;
+		Loop;
+	}
+}
+
+Class RedConfettiSlow : RedConfetti
+{
+	Default
+	{
+	Speed 3;
+	}
+}
+
+Class RedConfettiFast : RedConfetti
+{
+	Default
+	{
+	Speed 5;
+	}
+}
+
+Class GreenConfetti : Flying_Confetti
+{
+	States
+	{
+    Spawn:
+		TNT1 A 0;
+		TNT1 A 0 A_Jump(255, "Spawn1", "Spawn2", "Spawn3", "Fly");
+	Spawn1:
+		TNT1 A 0 A_SetScale(-0.3, 0.3);
+		TNT1 A 0 A_Jump(128, 2);
+		TNT1 A 0 A_SetRoll(random(45,90));
+		TNT1 A 0;
+		Goto Fly;
+	Spawn2:
+		TNT1 A 0 A_SetScale(-0.25, -0.25);
+		TNT1 A 0 A_Jump(128, 2);
+		TNT1 A 0 A_SetRoll(random(90,180));
+		TNT1 A 0;
+		Goto Fly;
+	Spawn3:
+		TNT1 A 0 A_SetScale(-0.35, 0.35);
+		TNT1 A 0 A_Jump(128, 2);
+		TNT1 A 0 A_SetRoll(random(180,270));
+		TNT1 A 0;
+		Goto Fly;
+	Fly:
+		CFTT G 10;
+		Loop;
+	}
+}
+
+Class GreenConfettiSlow : GreenConfetti
+{
+	Default
+	{
+	Speed 3;
+	}
+}
+
+Class GreenConfettiFast : GreenConfetti
+{
+	Default
+	{
+	Speed 5;
+	}
+}
+
+CLass BlueConfetti : Flying_Confetti
+{
+	States
+	{
+    Spawn:
+		TNT1 A 0;
+		TNT1 A 0 A_Jump(255, "Spawn1", "Spawn2", "Spawn3", "Fly");
+	Spawn1:
+		TNT1 A 0 A_SetScale(-0.3, 0.3);
+		TNT1 A 0 A_Jump(128, 2);
+		TNT1 A 0 A_SetRoll(random(45,90));
+		TNT1 A 0;
+		Goto Fly;
+	Spawn2:
+		TNT1 A 0 A_SetScale(-0.25, -0.25);
+		TNT1 A 0 A_Jump(128, 2);
+		TNT1 A 0 A_SetRoll(random(90,180));
+		TNT1 A 0;
+		Goto Fly;
+	Spawn3:
+		TNT1 A 0 A_SetScale(-0.35, 0.35);
+		TNT1 A 0 A_Jump(128, 2);
+		TNT1 A 0 A_SetRoll(random(180,270));
+		TNT1 A 0;
+		Goto Fly;
+	Fly:
+		CFTT B 10;
+		Loop;
+	}
+}
+
+Class BlueConfettiSlow : BlueConfetti
+{
+	Default
+	{
+	Speed 3;
+	}
+}
+
+Class BlueConfettiFast : BlueConfetti
+{
+	Default
+	{
+	Speed 5;
+	}
+}
+
+CLass PurpleConfetti : Flying_Confetti
+{
+	States
+	{
+    Spawn:
+		TNT1 A 0;
+		TNT1 A 0 A_Jump(255, "Spawn1", "Spawn2", "Spawn3", "Fly");
+	Spawn1:
+		TNT1 A 0 A_SetScale(-0.3, 0.3);
+		TNT1 A 0 A_Jump(128, 2);
+		TNT1 A 0 A_SetRoll(random(45,90));
+		TNT1 A 0;
+		Goto Fly;
+	Spawn2:
+		TNT1 A 0 A_SetScale(-0.25, -0.25);
+		TNT1 A 0 A_Jump(128, 2);
+		TNT1 A 0 A_SetRoll(random(90,180));
+		TNT1 A 0;
+		Goto Fly;
+	Spawn3:
+		TNT1 A 0 A_SetScale(-0.35, 0.35);
+		TNT1 A 0 A_Jump(128, 2);
+		TNT1 A 0 A_SetRoll(random(180,270));
+		TNT1 A 0;
+		Goto Fly;
+	Fly:
+		CFTT P 10;
+		Loop;
+	}
+}
+
+Class PurpleConfettiSlow : PurpleConfetti
+{
+	Default
+	{
+	Speed 3;
+	}
+}
+
+Class PurpleConfettiFast : PurpleConfetti
+{
+	Default
+	{
+	Speed 5;
+	}
+}
+
+Class PinkConfetti : Flying_Confetti
+{
+	States
+	{
+    Spawn:
+		TNT1 A 0;
+		TNT1 A 0 A_Jump(255, "Spawn1", "Spawn2", "Spawn3", "Fly");
+	Spawn1:
+		TNT1 A 0 A_SetScale(-0.3, 0.3);
+		TNT1 A 0 A_Jump(128, 2);
+		TNT1 A 0 A_SetRoll(random(45,90));
+		TNT1 A 0;
+		Goto Fly;
+	Spawn2:
+		TNT1 A 0 A_SetScale(-0.25, -0.25);
+		TNT1 A 0 A_Jump(128, 2);
+		TNT1 A 0 A_SetRoll(random(90,180));
+		TNT1 A 0;
+		Goto Fly;
+	Spawn3:
+		TNT1 A 0 A_SetScale(-0.35, 0.35);
+		TNT1 A 0 A_Jump(128, 2);
+		TNT1 A 0 A_SetRoll(random(180,270));
+		TNT1 A 0;
+		Goto Fly;
+	Fly:
+		CFTT I 10;
+		Loop;
+	}
+}
+
+Class PinkConfettiSlow : PinkConfetti
+{
+	Default
+	{
+	Speed 3;
+	}
+}
+
+Class PinkConfettiFast : PinkConfetti
+{
+	Default
+	{
+	Speed 5;
+	}
+}
+
+Class YellowConfetti : Flying_Confetti
+{
+	States
+	{
+    Spawn:
+		TNT1 A 0;
+		TNT1 A 0 A_Jump(255, "Spawn1", "Spawn2", "Spawn3", "Fly");
+	Spawn1:
+		TNT1 A 0 A_SetScale(-0.3, 0.3);
+		TNT1 A 0 A_Jump(128, 2);
+		TNT1 A 0 A_SetRoll(random(45,90));
+		TNT1 A 0;
+		Goto Fly;
+	Spawn2:
+		TNT1 A 0 A_SetScale(-0.25, -0.25);
+		TNT1 A 0 A_Jump(128, 2);
+		TNT1 A 0 A_SetRoll(random(90,180));
+		TNT1 A 0;
+		Goto Fly;
+	Spawn3:
+		TNT1 A 0 A_SetScale(-0.35, 0.35);
+		TNT1 A 0 A_Jump(128, 2);
+		TNT1 A 0 A_SetRoll(random(180,270));
+		TNT1 A 0;
+		Goto Fly;
+	Fly:
+		CFTT Y 10;
+		Loop;
+	}
+}
+
+Class YellowConfettiSlow : YellowConfetti
+{
+	Default
+	{
+	Speed 3;
+	}
+}
+
+Class YellowConfettiFast : YellowConfetti
+{
+	Default
+	{
+	Speed 5;
+	}
+}
+
+Class ConfettiSpawner : Actor
+{
+	Default
+	{
+	speed 4;
+	radius 8;
+	height 1;
+	Mass 1;
+	+CLIENTSIDEONLY
+	+NOTELEPORT   
+	+NOBLOCKMAP
+	+THRUACTORS   
+	+FORCEXYBILLBOARD
+	+MOVEWITHSECTOR   
+	+DONTSPLASH
+	}
+	
+	States
+	{
+	Spawn:
+		TNT1 A 0;
+		TNT1 A 0 A_Jump(256, "Spawn1", "Spawn2", "Spawn3", "Spawn4", "Spawn5");
+	Spawn1:
+		TNT1 AA 1 A_SpawnProjectile("RedConfetti", 0, 0, random (0, 360), 2, random (-30, -90));
+		TNT1 AA 1 A_SpawnProjectile("GreenConfetti", 0, 0, random (0, 360), 2, random (-30, -90));
+		TNT1 A 1 A_SpawnProjectile("BlueConfetti", 0, 0, random (0, 360), 2, random (-30, -90));
+		Goto ExtraSpawn;
+	Spawn2:
+		TNT1 A 1 A_SpawnProjectile("GreenConfetti", 0, 0, random (0, 360), 2, random (-30, -90));
+		TNT1 AAA 1 A_SpawnProjectile("BlueConfetti", 0, 0, random (0, 360), 2, random (-30, -90));
+		TNT1 AA 1 A_SpawnProjectile("YellowConfetti", 0, 0, random (0, 360), 2, random (-30, -90));
+		Goto ExtraSpawn;
+	Spawn3:
+		TNT1 A 1 A_SpawnProjectile("RedConfetti", 0, 0, random (0, 360), 2, random (-30, -90));
+		TNT1 AAA 1 A_SpawnProjectile("PurpleConfetti", 0, 0, random (0, 360), 2, random (-30, -90));
+		TNT1 AA 1 A_SpawnProjectile("YellowConfetti", 0, 0, random (0, 360), 2, random (-30, -90));
+		Goto ExtraSpawn;
+	Spawn4:
+		TNT1 AAA 1 A_SpawnProjectile("PinkConfetti", 0, 0, random (0, 360), 2, random (-30, -90));
+		TNT1 AA 1 A_SpawnProjectile("PurpleConfetti", 0, 0, random (0, 360), 2, random (-30, -90));
+		TNT1 A 1 A_SpawnProjectile("GreenConfetti", 0, 0, random (0, 360), 2, random (-30, -90));
+		Goto ExtraSpawn;
+	Spawn5:
+		TNT1 A 1 A_SpawnProjectile("RedConfetti", 0, 0, random (0, 360), 2, random (-30, -90));
+		TNT1 AA 1 A_SpawnProjectile("BlueConfetti", 0, 0, random (0, 360), 2, random (-30, -90));
+		TNT1 AAA 1 A_SpawnProjectile("GreenConfetti", 0, 0, random (0, 360), 2, random (-30, -90));
+	ExtraSpawn:
+		TNT1 A 0 A_Jump(32, "Spawn1", "Spawn2", "Spawn3", "Spawn4", "Spawn5");
+		Stop;
+	}
+}
+
+Class ConfettiSpawnerSlow : ConfettiSpawner
+{
+	States
+	{
+	Spawn:
+		TNT1 A 0;
+		TNT1 A 0 A_Jump(256, "Spawn1", "Spawn2", "Spawn3", "Spawn4", "Spawn5");
+	Spawn1:
+		TNT1 A 1 A_SpawnProjectile("RedConfettiSlow", 0, 0, random (0, 360), 2, random (-30, -90));
+		TNT1 AAA 1 A_SpawnProjectile("GreenConfettiSlow", 0, 0, random (0, 360), 2, random (-30, -90));
+		TNT1 A 1 A_SpawnProjectile("BlueConfettiSlow", 0, 0, random (0, 360), 2, random (-30, -90));
+		Goto ExtraSpawn;
+	Spawn2:
+		TNT1 A 1 A_SpawnProjectile("GreenConfettiSlow", 0, 0, random (0, 360), 2, random (-30, -90));
+		TNT1 AA 1 A_SpawnProjectile("BlueConfettiSlow", 0, 0, random (0, 360), 2, random (-30, -90));
+		TNT1 A 1 A_SpawnProjectile("YellowConfettiSlow", 0, 0, random (0, 360), 2, random (-30, -90));
+		Goto ExtraSpawn;
+	Spawn3:
+		TNT1 A 1 A_SpawnProjectile("RedConfettiSlow", 0, 0, random (0, 360), 2, random (-30, -90));
+		TNT1 AA 1 A_SpawnProjectile("PurpleConfettiSlow", 0, 0, random (0, 360), 2, random (-30, -90));
+		TNT1 A 1 A_SpawnProjectile("YellowConfettiSlow", 0, 0, random (0, 360), 2, random (-30, -90));
+		Goto ExtraSpawn;
+	Spawn4:
+		TNT1 AA 1 A_SpawnProjectile("PinkConfettiSlow", 0, 0, random (0, 360), 2, random (-30, -90));
+		TNT1 A 1 A_SpawnProjectile("PurpleConfettiSlow", 0, 0, random (0, 360), 2, random (-30, -90));
+		TNT1 A 1 A_SpawnProjectile("GreenConfettiSlow", 0, 0, random (0, 360), 2, random (-30, -90));
+		Goto ExtraSpawn;
+	Spawn5:
+		TNT1 A 1 A_SpawnProjectile("RedConfettiSlow", 0, 0, random (0, 360), 2, random (-30, -90));
+		TNT1 AA 1 A_SpawnProjectile("BlueConfettiSlow", 0, 0, random (0, 360), 2, random (-30, -90));
+		TNT1 A 1 A_SpawnProjectile("GreenConfettiSlow", 0, 0, random (0, 360), 2, random (-30, -90));
+	ExtraSpawn:
+		TNT1 A 0 A_Jump(32, "Spawn1", "Spawn2", "Spawn3", "Spawn4", "Spawn5");
+		Stop;
+	}
+}
+
+Class ConfettiSpawnerFast : ConfettiSpawner
+{
+	States
+	{
+	Spawn:
+		TNT1 A 0;
+		TNT1 A 0 A_Jump(256, "Spawn1", "Spawn2", "Spawn3", "Spawn4", "Spawn5");
+	Spawn1:
+		TNT1 AA 1 A_SpawnProjectile("RedConfettiFast", 0, 0, random (0, 360), 2, random (-30, -90));
+		TNT1 AA 1 A_SpawnProjectile("GreenConfettiFast", 0, 0, random (0, 360), 2, random (-30, -90));
+		TNT1 A 1 A_SpawnProjectile("BlueConfettiFast", 0, 0, random (0, 360), 2, random (-30, -90));
+		Goto ExtraSpawn;
+	Spawn2:
+		TNT1 A 1 A_SpawnProjectile("GreenConfettiFast", 0, 0, random (0, 360), 2, random (-30, -90));
+		TNT1 AAA 1 A_SpawnProjectile("BlueConfettiFast", 0, 0, random (0, 360), 2, random (-30, -90));
+		TNT1 AA 1 A_SpawnProjectile("YellowConfettiFast", 0, 0, random (0, 360), 2, random (-30, -90));
+		Goto ExtraSpawn;
+	Spawn3:
+		TNT1 A 1 A_SpawnProjectile("RedConfettiFast", 0, 0, random (0, 360), 2, random (-30, -90));
+		TNT1 AAA 1 A_SpawnProjectile("PurpleConfettiFast", 0, 0, random (0, 360), 2, random (-30, -90));
+		TNT1 AA 1 A_SpawnProjectile("YellowConfettiFast", 0, 0, random (0, 360), 2, random (-30, -90));
+		Goto ExtraSpawn;
+	Spawn4:
+		TNT1 AAA 1 A_SpawnProjectile("PinkConfettiFast", 0, 0, random (0, 360), 2, random (-30, -90));
+		TNT1 AA 1 A_SpawnProjectile("PurpleConfettiFast", 0, 0, random (0, 360), 2, random (-30, -90));
+		TNT1 A 1 A_SpawnProjectile("GreenConfettiFast", 0, 0, random (0, 360), 2, random (-30, -90));
+		Goto ExtraSpawn;
+	Spawn5:
+		TNT1 A 1 A_SpawnProjectile("RedConfettiFast", 0, 0, random (0, 360), 2, random (-30, -90));
+		TNT1 AA 1 A_SpawnProjectile("BlueConfettiFast", 0, 0, random (0, 360), 2, random (-30, -90));
+		TNT1 AAA 1 A_SpawnProjectile("GreenConfettiFast", 0, 0, random (0, 360), 2, random (-30, -90));
+	ExtraSpawn:
+		TNT1 A 0 A_Jump(32, "Spawn1", "Spawn2", "Spawn3", "Spawn4", "Spawn5");
+		Stop;
+	}
+}
+
+Class RedConfettiString : Flying_Confetti
+{
+	Default
+	{
+	Scale 0.15;
+	Speed 5;
+	}
+
+	States
+	{
+    Spawn:
+		TNT1 A 0;
+		CSTR R 10;
+		Wait;
+	}
+}
+
+Class RedConfettiString_Left : RedConfettiString
+{
+	Default
+	{
+	Scale 0.15;
+	Speed 6;
+	}
+
+	States
+	{
+    Spawn:
+		TNT1 A 0;
+		TNT1 A 0 A_SetRoll(random(45, 60));
+		CSTR R 10;
+		Wait;
+	}
+}
+
+Class RedConfettiString_Right : RedConfettiString
+{
+	Default
+	{
+	Scale 0.15;
+	Speed 6;
+	}
+
+	States
+	{
+    Spawn:
+		TNT1 A 0;
+		TNT1 A 0 A_SetRoll(random(-45, -60));
+		CSTR R 10;
+		Wait;
+	}
+}
+
+Class GreenConfettiString : Flying_Confetti
+{
+	Default
+	{
+	Scale 0.15;
+	Speed 5;
+	}
+
+	States
+	{
+    Spawn:
+		TNT1 A 0;
+		CSTR G 10;
+		Wait;
+	}
+}
+
+Class GreenConfettiString_Left : GreenConfettiString
+{
+	Default
+	{
+	Scale 0.15;
+	Speed 6;
+	}
+
+	States
+	{
+    Spawn:
+		TNT1 A 0;
+		TNT1 A 0 A_SetRoll(random(45, 60));
+		CSTR G 10;
+		Wait;
+	}
+}
+
+Class GreenConfettiString_Right : GreenConfettiString
+{
+	Default
+	{
+	Scale 0.15;
+	Speed 6;
+	}
+
+	States
+	{
+    Spawn:
+		TNT1 A 0;
+		TNT1 A 0 A_SetRoll(random(-45, -60));
+		CSTR G 10;
+		Wait;
+	}
+}
+
+Class BlueConfettiString : Flying_Confetti
+{
+	Default
+	{
+	Scale 0.15;
+	Speed 5;
+	}
+
+	States
+	{
+    Spawn:
+		TNT1 A 0;
+		CSTR B 10;
+		Wait;
+	}
+}
+
+Class BlueConfettiString_Left : BlueConfettiString
+{
+	Default
+	{
+	Scale 0.15;
+	Speed 6;
+	}
+
+	States
+	{
+    Spawn:
+		TNT1 A 0;
+		TNT1 A 0 A_SetRoll(random(45, 60));
+		CSTR B 10;
+		Wait;
+	}
+}
+
+Class BlueConfettiString_Right : BlueConfettiString
+{
+	Default
+	{
+	Scale 0.15;
+	Speed 6;
+	}
+
+	States
+	{
+    Spawn:
+		TNT1 A 0;
+		TNT1 A 0 A_SetRoll(random(-45, -60));
+		CSTR B 10;
+		Wait;
+	}
+}
+
+CLass PurpleConfettiString : Flying_Confetti
+{
+	Default
+	{
+	Scale 0.15;
+	Speed 5;
+	}
+
+	States
+	{
+    Spawn:
+		TNT1 A 0;
+		CSTR P 10;
+		Wait;
+	}
+}
+
+Class PurpleConfettiString_Left : PurpleConfettiString
+{
+	Default
+	{
+	Scale 0.15;
+	Speed 6;
+	}
+
+	States
+	{
+    Spawn:
+		TNT1 A 0;
+		TNT1 A 0 A_SetRoll(random(45, 60));
+		CSTR P 10;
+		Wait;
+	}
+}
+
+Class PurpleConfettiString_Right : PurpleConfettiString
+{
+	Default
+	{
+	Scale 0.15;
+	Speed 6;
+	}
+
+	States
+	{
+    Spawn:
+		TNT1 A 0;
+		TNT1 A 0 A_SetRoll(random(-45, -60));
+		CSTR P 10;
+		Wait;
+	}
+}
+
+Class PinkConfettiString : Flying_Confetti
+{
+	Default
+	{
+	Scale 0.15;
+	Speed 5;
+	}
+
+	States
+	{
+    Spawn:
+		TNT1 A 0;
+		CSTR P 10;
+		Wait;
+	}
+}
+
+Class PinkConfettiString_Left : PinkConfettiString
+{
+	Default
+	{
+	Scale 0.15;
+	Speed 6;
+	}
+
+	States
+	{
+    Spawn:
+		TNT1 A 0;
+		TNT1 A 0 A_SetRoll(random(45, 60));
+		CSTR P 10;
+		Wait;
+	}
+}
+
+Class PinkConfettiString_Right : PinkConfettiString
+{
+	Default
+	{
+	Scale 0.15;
+	Speed 6;
+	}
+
+	States
+	{
+    Spawn:
+		TNT1 A 0;
+		TNT1 A 0 A_SetRoll(random(-45, -60));
+		CSTR P 10;
+		Wait;
+	}
+}
+
+Class YellowConfettiString : Flying_Confetti
+{
+	Default
+	{
+	Scale 0.15;
+	Speed 5;
+	}
+
+	States
+	{
+    Spawn:
+		TNT1 A 0;
+		CSTR P 10;
+		Wait;
+	}
+}
+
+Class YellowConfettiString_Left : RedConfettiString
+{
+	Default
+	{
+	Scale 0.15;
+	Speed 6;
+	}
+
+	States
+	{
+    Spawn:
+		TNT1 A 0;
+		TNT1 A 0 A_SetRoll(random(45, 60));
+		CSTR P 10;
+		Wait;
+	}
+}
+
+Class YellowConfettiString_Right : RedConfettiString
+{
+	Default
+	{
+	Scale 0.15;
+	Speed 6;
+	}
+
+	States
+	{
+    Spawn:
+		TNT1 A 0;
+		TNT1 A 0 A_SetRoll(random(-45, -60));
+		CSTR P 10;
+		Wait;
+	}
+}
+
+Class ConfettiStringSpawner : ConfettiSpawner
+{
+	States
+	{
+	Spawn:
+		TNT1 A 0;
+		TNT1 A 0 A_Jump(256, "SpawnRed1", "SpawnRed2", "SpawnRed3", "SpawnGreen1", "SpawnGreen2", "SpawnGreen3", "SpawnBlue1", "SpawnBlue2", "SpawnBlue3", "SpawnPurple1", "SpawnPurple2", "SpawnPurple3", "SpawnPink1", "SpawnPink2", "SpawnPink3", "SpawnYellow1", "SpawnYellow2", "SpawnYellow3");
+	SpawnRed1:
+		TNT1 A 1 A_SpawnProjectile("RedConfettiString", 0, 0, random (0, 360), 2, random (-70, -110));
+		Stop;
+	SpawnRed2:
+		TNT1 A 1 A_SpawnProjectile("RedConfettiString_Left", 0, 0, random (45, 60), 2, random (-45, -60));
+		Stop;
+	SpawnRed2:
+		TNT1 A 1 A_SpawnProjectile("RedConfettiString_Right", 0, 0, random (-45, -60), 2, random (-45, -60));
+		Stop;
+	SpawnGreen1:
+		TNT1 A 1 A_SpawnProjectile("GreenConfettiString", 0, 0, random (0, 360), 2, random (-70, -110));
+		Stop;
+	SpawnGreen2:
+		TNT1 A 1 A_SpawnProjectile("GreenConfettiString_Left", 0, 0, random (45, 60), 2, random (-45, -60));
+		Stop;
+	SpawnGreen2:
+		TNT1 A 1 A_SpawnProjectile("GreenConfettiString_Right", 0, 0, random (-45, -60), 2, random (-45, -60));
+		Stop;
+	SpawnBlue1:
+		TNT1 A 1 A_SpawnProjectile("BlueConfettiString", 0, 0, random (0, 360), 2, random (-70, -110));
+		Stop;
+	SpawnBlue2:
+		TNT1 A 1 A_SpawnProjectile("BlueConfettiString_Left", 0, 0, random (45, 60), 2, random (-45, -60));
+		Stop;
+	SpawnBlue3:
+		TNT1 A 1 A_SpawnProjectile("BlueConfettiString_Right", 0, 0, random (-45, -60), 2, random (-45, -60));
+		Stop;
+	SpawnPurple1:
+		TNT1 A 1 A_SpawnProjectile("PurpleConfettiString", 0, 0, random (0, 360), 2, random (-70, -110));
+		Stop;
+	SpawnPurple2:
+		TNT1 A 1 A_SpawnProjectile("PurpleConfettiString_Left", 0, 0, random (45, 60), 2, random (-45, -60));
+		Stop;
+	SpawnPurple3:
+		TNT1 A 1 A_SpawnProjectile("PurpleConfettiString_Right", 0, 0, random (-45, -60), 2, random (-45, -60));
+		Stop;
+	SpawnPink1:
+		TNT1 A 1 A_SpawnProjectile("PinkConfettiString", 0, 0, random (0, 360), 2, random (-70, -110));
+		Stop;
+	SpawnPink2:
+		TNT1 A 1 A_SpawnProjectile("PinkConfettiString_Left", 0, 0, random (45, 60), 2, random (-45, -60));
+		Stop;
+	SpawnPink3:
+		TNT1 A 1 A_SpawnProjectile("PinkConfettiString_Right", 0, 0, random (-45, -60), 2, random (-45, -60));
+		Stop;
+	SpawnYellow1:
+		TNT1 A 1 A_SpawnProjectile("YellowConfettiString", 0, 0, random (0, 360), 2, random (-70, -110));
+		Stop;
+	SpawnYellow2:
+		TNT1 A 1 A_SpawnProjectile("YellowConfettiString_Left", 0, 0, random (45, 60), 2, random (-45, -60));
+		Stop;
+	SpawnYellow3:
+		TNT1 A 1 A_SpawnProjectile("YellowConfettiString_Right", 0, 0, random (-45, -60), 2, random (-45, -60));
+		Stop;
+	}
+}
+
+Class RedConfettiSmall : Flying_Confetti
+{
+	Default
+	{
+	Scale 0.1;
+	}
+
+	States
+	{
+    Spawn:
+		TNT1 A 0;
+		TNT1 A 0 A_Jump(255, "Spawn1", "Spawn2", "Spawn3", "Fly");
+	Spawn1:
+		TNT1 A 0 A_SetRoll(random(45,90));
+		Goto Fly;
+	Spawn2:
+		TNT1 A 0 A_SetRoll(random(90,180));
+		Goto Fly;
+	Spawn3:
+		TNT1 A 0 A_SetRoll(random(180,270));
+	Fly:
+		CFTT R 20;
+		Loop;
+	}
+}
+
+Class GreenConfettiSmall : Flying_Confetti
+{
+	Default
+	{
+	Scale 0.1;
+	}
+
+	States
+	{
+    Spawn:
+		TNT1 A 0;
+		TNT1 A 0 A_Jump(255, "Spawn1", "Spawn2", "Spawn3", "Fly");
+	Spawn1:
+		TNT1 A 0 A_SetRoll(random(45,90));
+		Goto Fly;
+	Spawn2:
+		TNT1 A 0 A_SetRoll(random(90,180));
+		Goto Fly;
+	Spawn3:
+		TNT1 A 0 A_SetRoll(random(180,270));
+	Fly:
+		CFTT G 20;
+		Loop;
+	}
+}
+
+Class BlueConfettiSmall : Flying_Confetti
+{
+	Default
+	{
+	Scale 0.1;
+	}
+
+	States
+	{
+    Spawn:
+		TNT1 A 0;
+		TNT1 A 0 A_Jump(255, "Spawn1", "Spawn2", "Spawn3", "Fly");
+	Spawn1:
+		TNT1 A 0 A_SetRoll(random(45,90));
+		Goto Fly;
+	Spawn2:
+		TNT1 A 0 A_SetRoll(random(90,180));
+		Goto Fly;
+	Spawn3:
+		TNT1 A 0 A_SetRoll(random(180,270));
+	Fly:
+		CFTT B 20;
+		Loop;
+	}
+}
+
+Class PurpleConfettiSmall : Flying_Confetti
+{
+	Default
+	{
+	Scale 0.1;
+	}
+
+	States
+	{
+    Spawn:
+		TNT1 A 0;
+		TNT1 A 0 A_Jump(255, "Spawn1", "Spawn2", "Spawn3", "Fly");
+	Spawn1:
+		TNT1 A 0 A_SetRoll(random(45,90));
+		Goto Fly;
+	Spawn2:
+		TNT1 A 0 A_SetRoll(random(90,180));
+		Goto Fly;
+	Spawn3:
+		TNT1 A 0 A_SetRoll(random(180,270));
+	Fly:
+		CFTT P 20;
+		Loop;
+	}
+}
+
+Class PinkConfettiSmall : Flying_Confetti
+{
+	Default
+	{
+	Scale 0.1;
+	}
+
+	States
+	{
+    Spawn:
+		TNT1 A 0;
+		TNT1 A 0 A_Jump(255, "Spawn1", "Spawn2", "Spawn3", "Fly");
+	Spawn1:
+		TNT1 A 0 A_SetRoll(random(45,90));
+		Goto Fly;
+	Spawn2:
+		TNT1 A 0 A_SetRoll(random(90,180));
+		Goto Fly;
+	Spawn3:
+		TNT1 A 0 A_SetRoll(random(180,270));
+	Fly:
+		CFTT I 20;
+		Loop;
+	}
+}
+
+Class YellowConfettiSmall : Flying_Confetti
+{
+	Default
+	{
+	Scale 0.1;
+	}
+
+	States
+	{
+    Spawn:
+		TNT1 A 0;
+		TNT1 A 0 A_Jump(255, "Spawn1", "Spawn2", "Spawn3", "Fly");
+	Spawn1:
+		TNT1 A 0 A_SetRoll(random(45,90));
+		Goto Fly;
+	Spawn2:
+		TNT1 A 0 A_SetRoll(random(90,180));
+		Goto Fly;
+	Spawn3:
+		TNT1 A 0 A_SetRoll(random(180,270));
+	Fly:
+		CFTT Y 20;
+		Loop;
+	}
+}
+
+Class SmallConfettiSpawner : ConfettiSpawner
+{
+	States
+	{
+	Spawn:
+		TNT1 A 0;
+		TNT1 A 0 A_Jump(256, "SpawnRed", "SpawnGreen", "SpawnBlue", "SpawnPurple", "SpawnPink", "SpawnYellow");
+	SpawnRed:
+		TNT1 A 1 A_SpawnProjectile("RedConfettiSmall", 0, 0, random (0, 360), 2, random (-70, -110));
+		Stop;
+	SpawnGreen:
+		TNT1 A 1 A_SpawnProjectile("GreenConfettiSmall", 0, 0, random (0, 360), 2, random (-70, -110));
+		Stop;
+	SpawnBlue:
+		TNT1 A 1 A_SpawnProjectile("BlueConfettiSmall", 0, 0, random (0, 360), 2, random (-70, -110));
+		Stop;
+	SpawnPurple:
+		TNT1 A 1 A_SpawnProjectile("PurpleConfettiSmall", 0, 0, random (0, 360), 2, random (-70, -110));
+		Stop;
+	SpawnPink:
+		TNT1 A 1 A_SpawnProjectile("PinkConfettiSmall", 0, 0, random (0, 360), 2, random (-70, -110));
+		Stop;
+	SpawnYellow:
+		TNT1 A 1 A_SpawnProjectile("YellowConfettiSmall", 0, 0, random (0, 360), 2, random (-70, -110));
+		Stop;
+	}
+}

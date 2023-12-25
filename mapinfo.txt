@@ -1,0 +1,13 @@
+
+Gameinfo
+{
+	ForceTextInMenus = true
+	MenuFontColor_Title = "WHITE"
+	MenuFontColor_Label = "WHITE"
+	MenuFontColor_Value = "WHITE"	
+	MenuFontColor_Action = "WHITE"
+	MenuFontColor_Header = "WHITE"
+	MenuFontColor_Highlight = "WHITE"
+
+	AddEventHandlers = "ConfettiGoreHandler", "weather_event", "weather_storage"
+}

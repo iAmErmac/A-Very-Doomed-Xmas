@@ -1,0 +1,27 @@
+[enu default]
+
+MNU_DXOPTIONS = "Mod Options";
+DOOMED_XMAS_OPTIONS = "Doomed Xmas Options";
+
+CONFGORE_OPTIONS = "Confetti Gore Options";
+CONFGORE = "Confetti Gore";
+CONFGORE_AMOUNT = "Amount of Confetti";
+CONFGORE_AMOUNT_LESS = "Less Confetti";
+CONFGORE_AMOUNT_DEFAULT = "Default Amount";
+CONFGORE_AMOUNT_MORE = "More Confetti";
+CONFGORE_CLEANUP = "Cleanup Mess";
+CONFGORE_FADE = "Fade Out Slowly";
+CONFGORE_CLEAN = "Cleanup Instantly";
+CONFGORE_CLEAN30SEC = "Cleanup Every 30 Sec";
+CONFGORE_CLEAN1MIN = "Cleanup Every 1 Min";
+CONFGORE_CLEAN3MIN = "Cleanup Every 3 Min";
+CONFGORE_CLEAN5MIN = "Cleanup Every 5 Min";
+CONFGORE_STAY = "Never Cleanup";
+
+WEATHER_OPTIONS = "Weather Option";
+WEATHER_SNOW = "Enable Snowfall";
+WEATHER_SNOWFALL = "Snowfall Intensity";
+WEATHER_SNOWFALL_LIGHT = "Light";
+WEATHER_SNOWFALL_MEDIUM = "Medium";
+WEATHER_SNOWFALL_HEAVY = "Heavy";
+WEATHER_SNOWFALL_EXTREME = "Extreme";
