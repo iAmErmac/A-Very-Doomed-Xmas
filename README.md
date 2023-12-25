@@ -34,4 +34,5 @@ Load the mod after the map packs. If you want to keep custom monsters from a map
 * War on Christmas - Sprite, Midi tracks
 * Xmas Nightmare - Midi tracks
 * Apeirogon - ZScript Simple Weather
+* Jimmy - MemenTwo font
 * Ermac - Confetti gore
